@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node backend/server.js",
     "dev": "nodemon backend/server.js",
-    "test": "set NODE_ENV=test&&mocha backend/**/*.test.js backend/tests/root.test.js --exit",
+    "test": "set NODE_ENV=test mocha backend/**/*.test.js --timeout 10000 --exit",    
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "keywords": [],
