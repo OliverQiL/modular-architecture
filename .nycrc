@@ -1,0 +1,21 @@
+{
+  "exclude": [
+    "coverage/**",
+    "node_modules/**",
+    "test/**",
+    "**/*.test.js",
+    "server.js",
+    "config/**"
+  ],
+  "reporter": [
+    "html",
+    "text",
+    "text-summary"
+  ],
+  "all": true,
+  "check-coverage": true,
+  "statements": 70,
+  "branches": 50,
+  "functions": 70,
+  "lines": 70
+}
