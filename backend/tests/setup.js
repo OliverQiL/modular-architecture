@@ -1,12 +1,11 @@
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
-const mocha = require('mocha')
 
 dotenv.config();
 
 const TEST_MONGODB_URI = process.env.TEST_MONGODB_URI || 'mongodb://localhost:27017/testdb';
 
-mocha.before(async function() {
+before(async function() {
     this.timeout(10000); // Set timeout to 10 seconds
 
     try {
@@ -18,13 +17,13 @@ mocha.before(async function() {
     }
 })
 
-mocha.after(async function() {
+after(async function() {
     await mongoose.connection.dropDatabase();
     await mongoose.connection.close();
     console.log('Test database cleaned and connection closed');
 })
 
-mocha.afterEach(async function() {
+afterEach(async function() {
     const collections = mongoose.connection.collections;
     for (const key in collections) {
         await collections[key].deleteMany({});

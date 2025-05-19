@@ -9,7 +9,7 @@ dotenv.config()
 
 // Connect to MongoDB if not in test mode as tests handle their own connection
 if (process.env.NODE_ENV !== 'test') {
-    connectDB()
+    connectDB.connectDB()
 }
 
 app.use(express.json())
@@ -51,4 +51,4 @@ if (process.env.NODE_ENV !== 'test') {
     })
 }
 
-module.exports = { app }
+module.exports = app
