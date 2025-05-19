@@ -1,11 +1,11 @@
-import * as smallProductHelpers from '../functions/smallProductHelpers.functions.js'
+const smallProductHelpers = require('../functions/smallProductHelpers.functions.js')
 
 // ====================================
 // CRUD CONTROLLERS
 // ====================================
 
 // GET /api/products - Get all products
-export const getAllProducts = async (req, res) => {
+const getAllProducts = async (req, res) => {
     try {
         const products = await smallProductHelpers.findAllProducts()
         res.json({
@@ -22,7 +22,7 @@ export const getAllProducts = async (req, res) => {
 }
 
 // GET /api/products/:id - Get a product by ID
-export const getProductById = async (req, res) => {
+const getProductById = async (req, res) => {
   try {
     const { id } = req.params
     const product = await smallProductHelpers.findProductById(id)
@@ -48,7 +48,7 @@ export const getProductById = async (req, res) => {
 }
 
 // POST /api/products - Create a new product
-export const createProduct = async (req, res) => {
+const createProduct = async (req, res) => {
   try {
     const productData = req.body
     const product = await smallProductHelpers.createProduct(productData)
@@ -67,7 +67,7 @@ export const createProduct = async (req, res) => {
 }
 
 // PUT /api/products/:id - Update a product
-export const updateProduct = async (req, res) => {
+const updateProduct = async (req, res) => {
     try {
         const { id } = req.params
         const updates = req.body
@@ -94,7 +94,7 @@ export const updateProduct = async (req, res) => {
 }
 
 // DELETE /api/products/:id - Delete a product
-export const deleteProduct = async (req, res) => {
+const deleteProduct = async (req, res) => {
     try {
         const { id } = req.params
         const product = await smallProductHelpers.deleteProduct(id)
@@ -116,4 +116,12 @@ export const deleteProduct = async (req, res) => {
             message: error.message
         })
     }
+}
+
+module.exports = {
+    getAllProducts,
+    getProductById,
+    createProduct,
+    updateProduct,
+    deleteProduct
 }

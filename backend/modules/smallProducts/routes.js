@@ -1,5 +1,5 @@
-import express from 'express';
-import { getAllProducts, getProductById, createProduct, updateProduct, deleteProduct } from './api/smallProductControllers.api.js';
+const express = require('express');
+const { getAllProducts, getProductById, createProduct, updateProduct, deleteProduct } = require('./api/smallProductControllers.api.js')
 
 const router = express.Router();
 
@@ -13,4 +13,4 @@ router.put('/:id', updateProduct); // Update a product
 
 router.delete('/:id', deleteProduct); // Delete a product
 
-export default router;
+module.exports = { router };

@@ -5,10 +5,9 @@
   "scripts": {
     "start": "node backend/server.js",
     "dev": "nodemon backend/server.js",
-    "test": "nyc mocha \"modules/**/*.test.js\" --exit -r dotenv/config",
+    "test": "set NODE_ENV=test&&mocha backend/**/*.test.js --require backend/tests/setup.js --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
-  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -23,6 +22,7 @@
     "chai-http": "^5.1.2",
     "mocha": "^11.3.0",
     "nodemon": "^3.1.10",
-    "nyc": "^17.1.0"
+    "nyc": "^17.1.0",
+    "supertest": "^7.1.1"
   }
 }

@@ -1,12 +1,12 @@
 // modules/products/functions/productHelpers.js
-import Product from '../models/smallProduct.model.js'
+const Product = require('../models/smallProduct.model.js')
 
 // ====================================
 // CRUD OPERATIONS
 // ====================================
 
 // Get all products with optional filtering
-export const findAllProducts = async (filters = {}) => {
+const findAllProducts = async (filters = {}) => {
   try {
     return await Product.find(filters).sort({ createdAt: -1 })
   } catch (error) {
@@ -15,7 +15,7 @@ export const findAllProducts = async (filters = {}) => {
 }
 
 // Find product by ID
-export const findProductById = async (id) => {
+const findProductById = async (id) => {
   try {
     return await Product.findById(id)
   } catch (error) {
@@ -24,7 +24,7 @@ export const findProductById = async (id) => {
 }
 
 // Create a new product
-export const createProduct = async (productData) => {
+const createProduct = async (productData) => {
   try {
     const product = new Product(productData)
     return await product.save()
@@ -39,7 +39,7 @@ export const createProduct = async (productData) => {
 }
 
 // Update a product
-export const updateProduct = async (id, updates) => {
+const updateProduct = async (id, updates) => {
   try {
     return await Product.findByIdAndUpdate(
       id, 
@@ -59,7 +59,7 @@ export const updateProduct = async (id, updates) => {
 }
 
 // Delete a product
-export const deleteProduct = async (id) => {
+const deleteProduct = async (id) => {
   try {
     return await Product.findByIdAndDelete(id)
   } catch (error) {
@@ -72,7 +72,7 @@ export const deleteProduct = async (id) => {
 // ====================================
 
 // Search products by name or description using text index
-export const searchProducts = async (searchTerm) => {
+const searchProducts = async (searchTerm) => {
   try {
     return await Product.find({
       $text: { $search: searchTerm }
@@ -83,7 +83,7 @@ export const searchProducts = async (searchTerm) => {
 }
 
 // Find products by status
-export const findProductsByStatus = async (status) => {
+const findProductsByStatus = async (status) => {
   try {
     return await Product.find({ status }).sort({ createdAt: -1 })
   } catch (error) {
@@ -92,7 +92,7 @@ export const findProductsByStatus = async (status) => {
 }
 
 // Find products with pagination
-export const findProductsPaginated = async (page = 1, limit = 10, filters = {}) => {
+const findProductsPaginated = async (page = 1, limit = 10, filters = {}) => {
   try {
     const skip = (page - 1) * limit
     const products = await Product.find(filters)
@@ -120,7 +120,7 @@ export const findProductsPaginated = async (page = 1, limit = 10, filters = {}) 
 // ====================================
 
 // Get low stock products
-export const findLowStockProducts = async (threshold = 10) => {
+const findLowStockProducts = async (threshold = 10) => {
   try {
     return await Product.find({ 
       stock: { $lte: threshold },
@@ -132,7 +132,7 @@ export const findLowStockProducts = async (threshold = 10) => {
 }
 
 // Get product statistics
-export const getProductStats = async () => {
+const getProductStats = async () => {
   try {
     const stats = await Product.aggregate([
       {
@@ -167,7 +167,7 @@ export const getProductStats = async () => {
 }
 
 // Check if SKU exists
-export const checkSkuExists = async (sku, excludeId = null) => {
+const checkSkuExists = async (sku, excludeId = null) => {
   try {
     const query = { sku: sku.toUpperCase() }
     if (excludeId) {
@@ -185,7 +185,7 @@ export const checkSkuExists = async (sku, excludeId = null) => {
 // ====================================
 
 // Bulk update stock levels
-export const bulkUpdateStock = async (updates) => {
+const bulkUpdateStock = async (updates) => {
   try {
     const bulkOps = updates.map(({ id, stock }) => ({
       updateOne: {
@@ -202,10 +202,26 @@ export const bulkUpdateStock = async (updates) => {
 }
 
 // Bulk delete products
-export const bulkDeleteProducts = async (ids) => {
+const bulkDeleteProducts = async (ids) => {
   try {
     return await Product.deleteMany({ _id: { $in: ids } })
   } catch (error) {
     throw new Error(`Error bulk deleting products: ${error.message}`)
   }
+}
+
+module.exports = {
+  findAllProducts,
+  findProductById,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  searchProducts,
+  findProductsByStatus,
+  findProductsPaginated,
+  findLowStockProducts,
+  getProductStats,
+  checkSkuExists,
+  bulkUpdateStock,
+  bulkDeleteProducts
 }
